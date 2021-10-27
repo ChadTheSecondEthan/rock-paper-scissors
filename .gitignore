@@ -2,10 +2,10 @@
 /.pnp
 .pnp.js
 
-/node_modules
+node_modules
 
 # testing
-client/coverage
+/coverage
 
 # misc
 .DS_Store
