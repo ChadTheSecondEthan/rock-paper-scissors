@@ -1,4 +1,4 @@
-const { io, app, express } = require('./data')
+const { io } = require('./data')
 
 const WaitingRoom = require('./rooms/waitingRoom')
 const Player = require('./player')
