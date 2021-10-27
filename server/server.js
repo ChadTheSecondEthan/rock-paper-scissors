@@ -1,7 +1,5 @@
 const { io, app, express } = require('./data')
 
-app.use(express.static(__dirname + '/../../build'))
-
 const WaitingRoom = require('./rooms/waitingRoom')
 const Player = require('./player')
 
