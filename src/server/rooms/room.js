@@ -9,7 +9,7 @@ class Room {
       name,
       type,
       players: {},
-      maxPlayers,
+      maxPlayers: parseInt(maxPlayers),
     }
   }
 
@@ -56,7 +56,7 @@ class Room {
     io.to(this.data.name).emit('room', this.data)
   }
 
-  sendMessage(to, message) {
+  sendMessage(to, message, callback) {
     this.sockets[to].emit('message', message)
   }
 

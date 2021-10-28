@@ -38,7 +38,7 @@ class WaitingRoom extends Room {
       room.isFull() ||
       !room.open ||
       room.data._private ||
-      room.data.maxPlayers !== size
+      room.data.maxPlayers != size
     ) {
       for (let index = 0; index < rooms.length; index++) {
         const curRoom = rooms[index]
@@ -55,7 +55,7 @@ class WaitingRoom extends Room {
       }
 
       roomIndex = rooms.length
-      rooms.push(new WaitingRoom(`Waiting Room - ${roomIndex + 1}`, size))
+      rooms.push(new WaitingRoom(`Waiting Room - ${++numRooms}`, size))
       room = rooms[roomIndex]
     }
     return room
@@ -147,7 +147,9 @@ class WaitingRoom extends Room {
 
     while (true) {
       this.data.timeToStart -= 1
-      this.emit()
+      this.emit(() => {
+        console.log('Time received by client')
+      })
       await sleep(1000)
       if (this.numPlayers < 2) {
         this.data.timeToStart = null
@@ -178,11 +180,13 @@ class WaitingRoom extends Room {
     })
 
     if (!this.data.timeToStart && this.numPlayers >= 2) this.startCountdown()
-    if (this.numPlayers === 4) this.data.timeToStart = 0
-    else if (this.numPlayers >= 6)
+    if (this.numPlayers === this.data.maxPlayers) {
+      this.data.timeToStart = Math.min(5, this.data.timeToStart)
+    } else if (
+      this.numPlayers > 1 &&
+      this.numPlayers === this.data.maxPlayers / 2
+    )
       this.data.timeToStart = Math.min(START_TIME / 2, this.data.startTime)
-    else if (this.numPlayers >= 10)
-      this.data.timeToStart = Math.min(10, this.data.startTime)
 
     this.emit()
     return true

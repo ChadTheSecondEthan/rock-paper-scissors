@@ -5,10 +5,17 @@ const Player = require('./player')
 
 io.on('connection', (socket) => {
   const player = new Player(socket)
+  player.name = 'a'
+  WaitingRoom.currentRoomOfSize(2).connectPlayer(player, socket)
 
   socket.on('quick-play', (playerName, roomSize) => {
     player.name = playerName
-    WaitingRoom.currentRoomOfSize(roomSize).connectPlayer(player, socket)
+    const room = WaitingRoom.currentRoomOfSize(parseInt(roomSize))
+    room.connectPlayer(player, socket)
+    socket.emit('message', {
+      type: 'success',
+      text: `Joined room ${room.data.name}`,
+    })
   })
 
   socket.on('join-room', (playerName, roomName) => {
