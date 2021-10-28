@@ -5,8 +5,6 @@ const Player = require('./player')
 
 io.on('connection', (socket) => {
   const player = new Player(socket)
-  player.name = 'a'
-  WaitingRoom.currentRoomOfSize(2).connectPlayer(player, socket)
 
   socket.on('quick-play', (playerName, roomSize) => {
     player.name = playerName
