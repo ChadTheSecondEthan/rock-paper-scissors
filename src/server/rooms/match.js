@@ -85,7 +85,6 @@ class Match extends Room {
   connectPlayer(player, socket) {
     if (!super.connectPlayer(player, socket)) return false
 
-    socket.removeAllListeners('set-data')
     socket.on('set-data', (data) => this.onPlayerChoose(data))
     return true
   }
