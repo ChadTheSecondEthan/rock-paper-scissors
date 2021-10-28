@@ -147,9 +147,7 @@ class WaitingRoom extends Room {
 
     while (true) {
       this.data.timeToStart -= 1
-      this.emit(() => {
-        console.log('Time received by client')
-      })
+      this.emit()
       await sleep(1000)
       if (this.numPlayers < 2) {
         this.data.timeToStart = null
@@ -157,8 +155,7 @@ class WaitingRoom extends Room {
         this.emit()
         return
       }
-      this.open =
-        this.data.timeToStart > 5 && this.numPlayers < this.data.maxPlayers
+      this.open = this.data.timeToStart > 5
       if (this.data.timeToStart <= 0) break
     }
 
